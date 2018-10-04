@@ -107,3 +107,4 @@ venv.bak/
 
 sentence2vec-master/sent.txt.vec
 sent.txt.vec
+tensorflow-mnist-cnn-master/model
