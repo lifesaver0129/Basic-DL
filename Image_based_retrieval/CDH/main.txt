@@ -1,0 +1,73 @@
+    The visual C# 2010 code for color difference hitogram (CDH).
+
+    For more information, refer to:
+
+    Guang-Hai Liu, Jing-Yu Yang, Content-based image retrieval using color difference histogram, Pattern Recognition, 46(1) (2013) 188-198.  
+
+    Copyright (C) 2013 Guang-Hai Liu <liuguanghai009@163.com>; Jing-Yu Yang <yangjy@mail.njust.edu.cn >
+
+    Note: The CDH algorithm is patented in china and cannot be used in commercial products without permission from the authors (Guang-Hai Liu and Jing-Yu Yang).
+    @version 1.1.0-20140305
+ 
+            //-------------- Input Images ------------------------
+
+
+                System.Drawing.Bitmap curBitmap;
+
+                string curFileName;   
+
+                curFileName = textBox6.Text + "\\" + Num.ToString() + ".jpg";
+
+                curBitmap = new Bitmap(curFileName);               
+              
+                int wid = curBitmap.Width;
+                int hei = curBitmap.Height;
+
+                int[, ,] RGB = new int[3, wid, hei];
+
+                int i, j;
+
+                for (i = 0; i < wid; i++)
+                {
+                    for (j = 0; j < hei; j++)
+                    {
+                        Color curColor;
+                        curColor = curBitmap.GetPixel(i, j);
+
+                        RGB[0, i, j] = (int)curColor.R;
+                        RGB[1, i, j] = (int)curColor.G;
+                        RGB[2, i, j] = (int)curColor.B;
+
+                    }
+                }
+              
+                curBitmap.Dispose();
+
+                int[,] ori = new int[wid, hei];
+
+                int[,] ColorX = new int[wid, hei];
+
+                double[, ,] LAB = new double[3, wid, hei];
+               
+           //------------ We uniformly quantize the L channel into 10 bins and the a and b channels into 3 bins --------------
+           //--------------- Orientation is quantized into 18 bins------------------------------------------------------------
+              
+                int lnum = 10;
+                int anum = 3;
+                int bnum = 3;
+
+                int cnum=lnum*anum*bnum;
+
+                int onum=18;
+            
+                double[] hist = new double[cnum+onum]; // the results of color difference histogram
+
+                ColorSpace.RGB2Lab(ref RGB, out LAB, wid, hei);
+
+                ColorQuantization.cLab(ref LAB, out ColorX, lnum, anum, bnum, wid, hei);
+
+                edge.maxgrad_and_mingrad_Lab(ref LAB, out ori, onum, wid, hei);
+
+                int D = 1;
+
+                colordifferencehistogram.compute(ref ColorX, ref ori, ref LAB, out hist, wid, hei, cnum, onum, D);

@@ -1,0 +1,2 @@
+https://github.com/goodvision/image-retrieval-database
+http://www.ci.gxnu.edu.cn/cbir/Result.aspx?lic=2518

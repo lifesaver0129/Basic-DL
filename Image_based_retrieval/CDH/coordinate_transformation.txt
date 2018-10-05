@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace LGH
+{
+   public class coordinate_transformation
+    { 
+        public static void LAB2Lab(ref double[, ,] arr, out double[, ,] Lab, int wid, int hei)
+        {
+            Lab = new double[3, wid, hei];
+
+            for (int i = 0; i < wid; i++)
+            {
+                for (int j = 0; j < hei; j++)
+                {
+                    Lab[0, i, j] = arr[0, i, j];
+
+                    Lab[1, i, j] = arr[1, i, j];
+
+                    Lab[2, i, j] = arr[2, i, j];
+
+                    //--------------------------
+                    Lab[1, i, j] = arr[1, i, j] + 127.0;
+
+                    if (Lab[1, i, j] >= 254.0)
+                    {
+                        Lab[1, i, j] = 254.0 - 1.0;
+                    }
+                    if (Lab[1, i, j] < 0)
+                    {
+                        Lab[1, i, j] = 0;
+                    }
+
+                    Lab[2, i, j] = arr[2, i, j] + 127.0;
+
+                    if (Lab[2, i, j] >= 254.0)
+                    {
+                        Lab[2, i, j] = 254.0 - 1.0;
+                    }
+                    if (Lab[2, i, j] < 0)
+                    {
+                        Lab[2, i, j] = 0;
+                    }
+                }
+            }
+        }
+  }

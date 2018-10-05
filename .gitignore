@@ -108,3 +108,5 @@ venv.bak/
 sentence2vec-master/sent.txt.vec
 sent.txt.vec
 tensorflow-mnist-cnn-master/model
+Image_based_retrieval/GHIM20
+Image_based_retrieval/Corel
